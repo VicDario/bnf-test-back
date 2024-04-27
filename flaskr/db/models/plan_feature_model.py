@@ -5,7 +5,15 @@ from .. import db
 from .plan_model import Plan
 
 class PlanFeature(db.Model):
-    id: Mapped[int] = mapped_column(primary_key=True)
-    plan_id: Mapped[int] = mapped_column(ForeignKey("plans.id"))
-    description: Mapped[str]
-    plan: Mapped["Plan"] = relationship("Plan", back_populates="plan_feature")
+  __tablename__ = "plan_features"
+  id: Mapped[int] = mapped_column(primary_key=True)
+  plan_id: Mapped[int] = mapped_column(ForeignKey("plans.id"))
+  description: Mapped[str]
+  hidden: Mapped[bool] = mapped_column(default=False)
+  plan: Mapped["Plan"] = relationship("Plan", viewonly=True)
+
+  def serialize(self):
+    return {
+      "description": self.description,
+      "hidden": self.hidden
+    }
