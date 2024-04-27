@@ -21,6 +21,11 @@ def create_app(test_config=None):
     except OSError:
         pass
 
+    from .db import db
+    db.init_app(app)
+    with app.app_context():
+        db.create_all()
+
     from flaskr.routes import routes
     app.register_blueprint(routes, url_prefix='/api')
 
