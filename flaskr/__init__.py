@@ -1,6 +1,7 @@
 import os
 from flask import Flask
 from flask_migrate import Migrate
+from flask_cors import CORS
 from dotenv import load_dotenv
 
 def create_app(test_config=None):
@@ -21,6 +22,8 @@ def create_app(test_config=None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
+
+    CORS(app)
 
     from .db import db
     db.init_app(app)
