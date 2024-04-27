@@ -1,5 +1,6 @@
 import os
 from flask import Flask
+from flask_migrate import Migrate
 from dotenv import load_dotenv
 
 def create_app(test_config=None):
@@ -23,6 +24,8 @@ def create_app(test_config=None):
 
     from .db import db
     db.init_app(app)
+    migrate = Migrate(app, db)
+    migrate.init_app(app, db)
     with app.app_context():
         db.create_all()
 
