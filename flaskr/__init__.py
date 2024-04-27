@@ -6,8 +6,9 @@ from dotenv import load_dotenv
 
 def create_app(test_config=None):
     # create and configure the app
-    app = Flask(__name__, instance_relative_config=True)
-
+    app = Flask(__name__)
+    CORS(app, resources={r"/api/*": {"origins": "*"}})
+    app.config['CORS_HEADERS'] = 'Content-Type'
     load_dotenv()
     if os.getenv('FLASK_ENV') == 'development':
         app.config.from_object('flaskr.config.DevelopmentConfig')
@@ -22,8 +23,6 @@ def create_app(test_config=None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
-
-    CORS(app)
 
     from .db import db
     db.init_app(app)
