@@ -1,7 +1,5 @@
-from sqlalchemy.orm import Mapped, mapped_column
-from typing import List
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from .. import db
-from .plan_feature_model import PlanFeature
 
 class Plan(db.Model):
   __tablename__ = "plans"
@@ -11,7 +9,7 @@ class Plan(db.Model):
   description: Mapped[str]
   ai_addon: Mapped[bool] = mapped_column(default=False)
   best_value: Mapped[bool] = mapped_column(default=False)
-  features: Mapped[List["PlanFeature"]] = relationship()
+  features = relationship("PlanFeature")
 
   def serialize(self):
     return {

@@ -10,7 +10,7 @@ class PlanFeature(db.Model):
   plan_id: Mapped[int] = mapped_column(ForeignKey("plans.id"))
   description: Mapped[str]
   hidden: Mapped[bool] = mapped_column(default=False)
-  plan: Mapped["Plan"] = relationship("Plan", viewonly=True)
+  plan: Mapped["Plan"] = relationship(viewonly=True)
 
   def serialize(self):
     return {
