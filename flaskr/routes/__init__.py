@@ -1,6 +1,6 @@
 from flask import Blueprint
 from .help_routes import help
-from .plans_router import plans
+from .plans_routes import plans
 
 routes = Blueprint('api', __name__)
 
