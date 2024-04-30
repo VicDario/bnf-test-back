@@ -8,7 +8,7 @@ def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__)
     CORS(app, resources={r"/api/*": {"origins": "*"}})
-    app.config['CORS_HEADERS'] = 'Content-Type'
+
     load_dotenv()
     if os.getenv('FLASK_ENV') == 'development':
         app.config.from_object('flaskr.config.DevelopmentConfig')
@@ -26,8 +26,10 @@ def create_app(test_config=None):
 
     from .db import db
     db.init_app(app)
+
     migrate = Migrate(app, db)
     migrate.init_app(app, db)
+    
     with app.app_context():
         db.create_all()
 
